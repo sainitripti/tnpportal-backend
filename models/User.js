@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 let UserSchema = new Schema({
     enrollmentNum: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
         type: String,
