@@ -20,8 +20,8 @@ router.get('/', auth, (req, res) => {
 
 //@route    POST api/users
 //desc      create a new User
-//access    Private
-router.post('/', auth, (req, res) => {
+//access    Public
+router.post('/', (req, res) => {
     const {enrollmentNum, password, role} = req.body;
 
     //Sinple validation
