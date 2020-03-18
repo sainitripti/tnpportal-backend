@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const config = require('config');
 const jwt = require('jsonwebtoken');
 const auth = require('../../middleware/auth');
+const adminAuth = require('../../middleware/adminAuth');
 
 const jwtSecret = config.get('jwtSecret');
 
@@ -12,8 +13,8 @@ const User = require('../../models/User');
 
 //@route    GET api/users
 //desc      GET All Users
-//access    Private
-router.get('/', auth, (req, res) => {
+//access    Private+Admin
+router.get('/', adminAuth, (req, res) => {
     User.find()
         .then(users => res.json(users))
 });
@@ -75,8 +76,8 @@ router.post('/', (req, res) => {
 
 //@route    DELETE api/users/:id
 //desc      delete User
-//access    Private
-router.delete('/:id', auth, (req, res) => {
+//access    Private+Admin
+router.delete('/:id', adminAuth, (req, res) => {
     User.findById(req.params.id)
         .then(user => user.remove().then(() => res.json({success: true})))
         .catch(err => res.status(404).json({success: false}));
