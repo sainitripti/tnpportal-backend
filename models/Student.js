@@ -16,65 +16,75 @@ let StudentSchema = new Schema({
         required: true
     },
     phoneNumber: {
-        type: String
+        type: String,
+        required: true
     },
     branch: {
-        type: String
+        type: String,
+        required: true
     },
     course: {
-        type: String
+        type: String,
+        required: true
     },
     graduationYear: {
-        type: String
+        type: String,
+        required: true
     },
     currentPercentage: {
-        type: String
+        type: String,
+        required: true
     },
     percentage10: {
-        type: String
+        type: String,
+        required: true
     },
     percentage12: {
-        type: String
+        type: String,
+        required: true
     },
     percentageUG: {
         type: String
     },
     backlogs: {
         activeBacklogs: {
-            type: Number
+            type: Number,
+            required: true
         },
         deadBacklogs: {
-            type: Number
+            type: Number,
+            required: true
         }
     },
     resumeLink: {
-        type: String
+        type: String,
+        required: true
     },
     isAppearingForPlacements: {
-        type: Boolean
+        type: Boolean,
+        required: true
     },
     isPlaced: {
-        type: Boolean
+        type: Boolean,
+        required: true
     },
-    offerDetails: {
-        type: [{
-            companyName: {
-                type: String
-            },
-            source: {
-                type: String
-            },
-            role: {
-                type: String
-            },
-            ctc: {
-                type: String
-            },
-            isMassRecruitment: {
-                type: Boolean
-            }
-        }] 
-    }
+    offerDetails: [{
+        companyName: {
+            type: String
+        },
+        source: {
+            type: String
+        },
+        role: {
+            type: String
+        },
+        ctc: {
+            type: String
+        },
+        isMassRecruitment: {
+            type: Boolean
+        }
+    }] 
 });
 
 module.exports = Student = mongoose.model('student', StudentSchema);

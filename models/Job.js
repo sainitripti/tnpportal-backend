@@ -2,88 +2,118 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let JobSchema = new Schema({
+    drive: {
+        type: String,
+        required: true,
+        unique: true
+    },
     profile: {
-        type: String
+        type: String,
+        required: true
     },
     domain: {
-        type: String
+        type: String,
+        required: true
     },
     role: {
-        type: String
+        type: String,
+        required: true
     },
     location: {
-        type: String
+        type: String,
+        required: true
     },
     description: {
-        type: String
+        type: String,
+        required: true
     },
     stipend: {
-        type: Number
+        type: Number,
+        required: true
     },
     compensationOffered: {
         totalCTC: {
-            type: String
+            type: String,
+            required: true
         },
         breakupCTC: {
             fixed: {
-                type: String
+                type: String,
+                required: true
             },
             variable: {
-                type: String
+                type: String,
+                required: true
             },
             bonds : {
-                type: String
+                type: String,
+                required: true
             },
             otherAllowances: {
-                type: String
+                type: String,
+                required: true
             }
         }
     },
     eligibilityCriteria: {
         targetBatchYear: {
-            type: String
+            type: [String],
+            required: true
         },
         targetCourses: {
-            type: [String]
+            type: [String],
+            required: true
         },
         cutoffPercentage: {
-            type: String
+            type: String,
+            required: true
         },
         activeBacklogs: {
-            type: Number
+            type: String,
+            required: true
         },
         deadBacklogs: {
-            type: Number
+            type: String,
+            required: true
         }
     },
     selectionProcedure: {
-        prefferedVisitDateOrWeek: {
-            type: String
+        visitDate: {
+            type: String,
+            required: true
         },
         hasWrittenTest: {
-            type: Boolean
+            type: Boolean,
+            required: true
         },
         hasOnlineTest: {
-            type: Boolean
+            type: Boolean,
+            required: true
         },
         hasGD: {
-            type: Boolean
+            type: Boolean,
+            required: true
         },
         hasTechnicalRound: {
-            type: Boolean
+            type: Boolean,
+            required: true
         },
         hasHRRound: {
-            type: Boolean
+            type: Boolean,
+            required: true
         }
     },
     otherInfoForStudents: {
-        type: String
+        type: String,
+        required: true
     },
     lastDateToRegister: {
-        type: Date
+        type: Date,
+        required: true
     },
     dateOfJobPosting: {
-        type: Date
+        type: Date,
+        required: true
     }
 });
 

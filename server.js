@@ -9,6 +9,8 @@ const users = require('./routes/api/users');
 const auth = require('./routes/api/auth');
 const companies = require('./routes/api/companies');
 const results = require('./routes/api/results');
+const jobs = require('./routes/api/jobs');
+const students = require('./routes/api/students');
 
 app.use(cors());
 app.use(express.json());
@@ -27,6 +29,8 @@ app.use('/api/users', users);
 app.use('/api/auth', auth);
 app.use('/api/companies', companies);
 app.use('/api/results', results);
+app.use('/api/jobs', jobs);
+app.use('/api/students', students);
 
 app.listen(PORT, function() {
     console.log("Server is running on Port: " + PORT);
