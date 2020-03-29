@@ -23,25 +23,61 @@ router.get('/', auth, (req, res) => {
 //desc      create a new Company
 //access    Private+Admin
 router.post('/', adminAuth, (req, res) => {
-    const {name, jobRole, jobLocation, package, eligibility, other} = req.body;
+    const {companyDetails, jobDetails, eligibility, selectionProcedure, requirements, otherInfoForStudents} = req.body;
 
-    //Sinple validation
-    if(!name || !jobRole || !jobLocation || !package || !eligibility || !other){
-        return res.status(400).json({msg: "Please enter all fields!"});
+    const companyName = req.body.companyDetails.companyName;
+    const contactPerson = req.body.companyDetails.contactPerson;
+    const phoneNumber = req.body.companyDetails.phoneNumber;
+    const emailID = req.body.companyDetails.emailID;
+
+    //Simple validation
+    if(!companyDetails){
+        return res.status(400).json({msg: "Please enter company details!"});
+    }
+    if(!companyName){
+        return res.status(400).json({msg: "Please enter company name!"});
+    }
+    if(!contactPerson){
+        return res.status(400).json({msg: "Please enter contact person!"});
+    }
+    if(!phoneNumber){
+        return res.status(400).json({msg: "Please enter phone number!"});
+    }
+    if(!emailID){
+        return res.status(400).json({msg: "Please enter emailID!"});
+    }
+    if(!jobDetails){
+        return res.status(400).json({msg: "Please enter job details!"});
+    }
+    if(!eligibility){
+        return res.status(400).json({msg: "Please enter elgibility criteria!"});
+    }
+    if(!selectionProcedure){
+        return res.status(400).json({msg: "Please enter selection procedure!"});
+    }
+    if(!requirements){
+        return res.status(400).json({msg: "Please enter your requirements from college!"});
+    }
+    if(!otherInfoForStudents){
+        return res.status(400).json({msg: "Please enter any other information for students!"});
     }
 
     //Check for existing company
-    Company.findOne({name})
+    Company.findOne({companyName})
         .then(company => {
             if(company) return res.status(400).json({msg: "Company already exist!"});
 
             const newCompany = new Company({
-                name,
-                jobRole,
-                jobLocation,
-                package,
-                eligibility,
-                other
+                companyDetails, 
+                companyName,
+                contactPerson,
+                phoneNumber,
+                emailID,
+                jobDetails, 
+                eligibility, 
+                selectionProcedure, 
+                requirements, 
+                otherInfoForStudents
             });
 
                     
@@ -51,7 +87,7 @@ router.post('/', adminAuth, (req, res) => {
                 res.json({
                     company: {
                         id: company.id,
-                        name: company.name
+                        companyName: company.companyName
                     },
                     msg: {
                         success: true
@@ -75,6 +111,12 @@ router.put('/:id', adminAuth, (req, res) => {
             company.package = req.body.package;
             company.eligibility = req.body.eligibility;
             company.other = req.body.other;
+            company.companyDetails = req.body.companyDetails;
+            company.jobDetails = req.body.jobDetails;
+            company.eligibility = req.body.eligibility; 
+            company.selectionProcedure = req.body.selectionProcedure;
+            company.requirements = req.body.requirements;
+            company.otherInfoForStudents = req.body.otherInfoForStudents;
                 
             company.save().then(() => res.json({success: true}))
             .catch(err => res.status(404).json({success: false}));
