@@ -23,12 +23,9 @@ router.get('/', auth, (req, res) => {
 //desc      create a new Job
 //access    Private+Admin
 router.post('/', adminAuth, (req, res) => {
-    const {drive, profile, domain, role, location, description, 
-        stipend, compensationOffered, totalCTC, breakupCTC, fixed, variable, bonds, otherAllowances,
-        eligibilityCriteria, targetBatchYear, targetCourses, cutoffPercentage, activeBacklogs, deadBacklogs,
-        selectionProcedure, visitDate, hasWrittenTest, hasOnlineTest, hasGD, hasTechnicalRound, hasHRRound,
-        otherInfoForStudents, lastDateToRegister, dateOfJobPosting} = req.body;
-    
+    const {drive, profile, domain, role, location, description, targetBatchYear, targetCourses, visitDate, compensationOffered, 
+        eligibilityCriteria, selectionProcedure, otherInfoForStudents, lastDateToRegister, dateOfJobPosting} = req.body;
+
     //Simple validation
     if(!drive){
         return res.status(400).json({msg: "Please enter drive name!"});
@@ -48,69 +45,24 @@ router.post('/', adminAuth, (req, res) => {
     if(!description) {
         return res.status(400).json({msg: "Please enter job description!"});
     }
-    if(!stipend) {
-        return res.status(400).json({msg: "Please enter stipend for interns!"});
-    }
-    if(!compensationOffered) {
-        return res.status(400).json({msg: "Please enter compensation!"});
-    }
-    if(!totalCTC) {
-        return res.status(400).json({msg: "Please enter total CTC!"});
-    }
-    if(!breakupCTC) {
-        return res.status(400).json({msg: "Please enter breakupCTC!"});
-    }
-    if(!fixed){
-        return res.status(400).json({msg: "Please enter fixed pay!"});
-    }   
-    if(!variable) {
-        return res.status(400).json({msg: "Please enter variable pay!"});
-    }
-    if(!bonds) {
-        return res.status(400).json({msg: "Please enter bonds!"});
-    }
-    if(!otherAllowances) {
-        return res.status(400).json({msg: "Please enter otherAllowances!"});
-    }
-    if(!eligibilityCriteria) {
-        return res.status(400).json({msg: "Please enter eligibility criteria!"});
-    }
     if(!targetBatchYear) {
         return res.status(400).json({msg: "Please enter target batch year!"});
     }
     if(!targetCourses) {
         return res.status(400).json({msg: "Please enter target courses!"});
     }
-    if(!cutoffPercentage) {
-        return res.status(400).json({msg: "Please enter cutoff percentage!"});
+    if(!visitDate) {
+        return res.status(400).json({msg: "Please enter visit date!"});
     }
-    if(!activeBacklogs) {
-        return res.status(400).json({msg: "Please enter active backlogs!"});
+    if(!compensationOffered) {
+        return res.status(400).json({msg: "Please enter compensation!"});
     }
-    if(!deadBacklogs) {
-        return res.status(400).json({msg: "Please enter dead backlogs!"});
+    if(!eligibilityCriteria) {
+        return res.status(400).json({msg: "Please enter eligibility criteria!"});
     }
     if(!selectionProcedure){
         return res.status(400).json({msg: "Please enter selection procedure!"});
     }   
-    if(!visitDate) {
-        return res.status(400).json({msg: "Please enter visit date!"});
-    }
-    if(!hasWrittenTest) {
-        return res.status(400).json({msg: "Please enter if there is any Written Test or not!"});
-    }
-    if(!hasOnlineTest) {
-        return res.status(400).json({msg: "Please enter if there is any Online Test or not!"});
-    }
-    if(!hasGD) {
-        return res.status(400).json({msg: "Please enter if there is any GD round or not!"});
-    }
-    if(!hasTechnicalRound) {
-        return res.status(400).json({msg: "Please enter if there is any technical round or not!"});
-    }
-    if(!hasHRRound) {
-        return res.status(400).json({msg: "Please enter if there is any HR round or not!"});
-    }
     if(!otherInfoForStudents){
         return res.status(400).json({msg: "Please enter other info for students!"});
     }   
@@ -122,7 +74,7 @@ router.post('/', adminAuth, (req, res) => {
     }
 
     //Check for existing Job
-    Result.findOne({drive})
+    Job.findOne({drive})
         .then(job => {
             if(job) return res.status(400).json({msg: "Job drive already exist!"});
 
@@ -133,32 +85,16 @@ router.post('/', adminAuth, (req, res) => {
                 role, 
                 location, 
                 description, 
-                stipend, 
-                compensationOffered, 
-                totalCTC, 
-                breakupCTC, 
-                fixed, 
-                variable, 
-                bonds, 
-                otherAllowances,
-                eligibilityCriteria, 
                 targetBatchYear, 
                 targetCourses, 
-                cutoffPercentage, 
-                activeBacklogs, 
-                deadBacklogs,
-                selectionProcedure, 
                 visitDate, 
-                hasWrittenTest, 
-                hasOnlineTest, 
-                hasGD, 
-                hasTechnicalRound, 
-                hasHRRound,
+                compensationOffered, 
+                eligibilityCriteria, 
+                selectionProcedure,
                 otherInfoForStudents, 
                 lastDateToRegister, 
                 dateOfJobPosting
             });
-
                     
             newJob.save()
             .then(job => {
@@ -166,7 +102,7 @@ router.post('/', adminAuth, (req, res) => {
                 res.json({
                     job: {
                         id: job.id,
-                        drive: result.drive
+                        drive: job.drive
                     },
                     msg: {
                         success: true
@@ -190,27 +126,12 @@ router.put('/:id', adminAuth, (req, res) => {
             job.role = req.body.role;
             job.location = req.body.location;
             job.description = req.body.description;
-            job.stipend = req.body.stipend;
-            job.compensationOffered = req.body.compensationOffered;
-            job.totalCTC = req.body.totalCTC;
-            job.breakupCTC = req.body.breakupCTC;
-            job.fixed = req.body.fixed;
-            job.variable = req.body.variable;
-            job.bonds = req.body.bonds;
-            job.otherAllowances = req.body.otherAllowances;
-            job.eligibilityCriteria = req.body.eligibilityCriteria;
             job.targetBatchYear = req.body.targetBatchYear;
             job.targetCourses = req.body.targetCourses;
-            job.cutoffPercentage = req.body.cutoffPercentage;
-            job.activeBacklogs = req.body.activeBacklogs;
-            job.deadBacklogs = req.body.deadBacklogs;
-            job.selectionProcedure = req.body.selectionProcedure;
             job.visitDate = req.body.visitDate;
-            job.hasWrittenTest = req.body.hasWrittenTest;
-            job.hasOnlineTest = req.body.hasOnlineTest;
-            job.hasGD = req.body.hasGD;
-            job.hasTechnicalRound = req.body.hasTechnicalRound;
-            job.hasHRRound = req.body.hasHRRound;
+            job.compensationOffered = req.body.compensationOffered;
+            job.eligibilityCriteria = req.body.eligibilityCriteria;
+            job.selectionProcedure = req.body.selectionProcedure;
             job.otherInfoForStudents = req.body.otherInfoForStudents;
             job.lastDateToRegister = req.body.lastDateToRegister;
             job.dateOfJobPosting = req.body.dateOfJobPosting;

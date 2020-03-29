@@ -27,80 +27,63 @@ let JobSchema = new Schema({
         type: String,
         required: true
     },
-    stipend: {
-        type: Number,
-        required: true
+    targetBatchYear: {
+        type: [String]
+    },
+    targetCourses: {
+        type: [String]
+    },
+    visitDate: {
+        type: String
     },
     compensationOffered: {
+        stipend: {
+            type: Number
+        },
         totalCTC: {
-            type: String,
-            required: true
+            type: String
         },
         breakupCTC: {
             fixed: {
-                type: String,
-                required: true
+                type: String
             },
             variable: {
-                type: String,
-                required: true
+                type: String
             },
             bonds : {
-                type: String,
-                required: true
+                type: String
             },
             otherAllowances: {
-                type: String,
-                required: true
+                type: String
             }
         }
     },
     eligibilityCriteria: {
-        targetBatchYear: {
-            type: [String],
-            required: true
-        },
-        targetCourses: {
-            type: [String],
-            required: true
-        },
         cutoffPercentage: {
-            type: String,
-            required: true
+            type: String
         },
         activeBacklogs: {
-            type: String,
-            required: true
+            type: String
         },
         deadBacklogs: {
-            type: String,
-            required: true
+            type: String
         }
     },
     selectionProcedure: {
-        visitDate: {
-            type: String,
-            required: true
+        writtenTest: {
+            type: String
         },
-        hasWrittenTest: {
-            type: Boolean,
-            required: true
+        onlineTest: {
+            type: String
         },
-        hasOnlineTest: {
-            type: Boolean,
-            required: true
+        groupDiscussion: {
+            type: String
         },
-        hasGD: {
-            type: Boolean,
-            required: true
+        technicalRound: {
+            type: String
         },
-        hasTechnicalRound: {
-            type: Boolean,
-            required: true
-        },
-        hasHRRound: {
-            type: Boolean,
-            required: true
+        hrRound: {
+            type: String
         }
     },
     otherInfoForStudents: {
