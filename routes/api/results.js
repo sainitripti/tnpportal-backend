@@ -47,14 +47,13 @@ router.post('/', adminAuth, (req, res) => {
     if(!ctcFTE) {
         return res.status(400).json({msg: "Please enter CTC for FTE!"});
     }
-    if(!isMassRecruitment) {
+    if(isMassRecruitment===null) {
         return res.status(400).json({msg: "Please enter if it is a mass recruitment or not!"});
     }
     if(!profile) {
         return res.status(400).json({msg: "Please enter job profile!"});
     }
     
-
     //Check for existing Result
     Result.findOne({companyName})
         .then(result => {
@@ -76,18 +75,8 @@ router.post('/', adminAuth, (req, res) => {
 
                     
             newResult.save()
-            .then(result => {
-
-                res.json({
-                    result: {
-                        id: result.id,
-                        companyName: result.companyName
-                    },
-                    msg: {
-                        success: true
-                    }                      
-                })
-            })                     
+            .then(result => res.json({ msg: "Result added successfully!" }))
+            .catch(err => res.status(404).json({msg: "Failed to add result!"}))                     
         })
 });
 
