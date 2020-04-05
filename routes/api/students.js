@@ -19,6 +19,16 @@ router.get('/', auth, (req, res) => {
         .then(student => res.json(student))
 });
 
+//@route    GET api/students/:enrollmentNum
+//desc      GET Student with id
+//access    Private
+router.get('/:enrollmentNum', auth, (req,res) => {
+    const {enrollmentNum} = req.params;
+    Student.findOne({enrollmentNum})
+    .then(student => res.json(student))
+    .catch(err => res.status(404).json({success: false}));
+});
+
 //@route    POST api/students
 //desc      create a new Student
 //access    Private+Admin
