@@ -97,18 +97,8 @@ router.post('/', adminAuth, (req, res) => {
             });
                     
             newJob.save()
-            .then(job => {
-
-                res.json({
-                    job: {
-                        id: job.id,
-                        drive: job.drive
-                    },
-                    msg: {
-                        success: true
-                    }                      
-                })
-            })                     
+            .then(job => res.json({ msg: "Job posted successfully!" }))   
+            .catch(err => res.status(404).json({msg: "Failed to add job!"}))                   
         })
 });
 
@@ -136,8 +126,8 @@ router.put('/:id', adminAuth, (req, res) => {
             job.lastDateToRegister = req.body.lastDateToRegister;
             job.dateOfJobPosting = req.body.dateOfJobPosting;
 
-            job.save().then(() => res.json({success: true}))
-            .catch(err => res.status(404).json({success: false}));
+            job.save().then(() => res.json({ msg: "Job edited successfully!" }))
+            .catch(err => res.status(404).json({msg: "Failed to edit job!"}));
     });
 })
 
@@ -147,8 +137,8 @@ router.put('/:id', adminAuth, (req, res) => {
 //access    Private+Admin
 router.delete('/:id', adminAuth, (req, res) => {
     Job.findById(req.params.id)
-        .then(job => job.remove().then(() => res.json({success: true})))
-        .catch(err => res.status(404).json({success: false}));
+        .then(job => job.remove().then(() => res.json({ msg: "Job deleted successfully!" })))
+        .catch(err => res.status(404).json({msg: "Failed to delete job!"}));
 })
 
 module.exports = router;

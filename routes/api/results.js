@@ -100,8 +100,8 @@ router.put('/:id', adminAuth, (req, res) => {
             result.arFTE = req.body.arFTE;
             result.profile = req.body.profile;
                 
-            result.save().then(() => res.json({success: true}))
-            .catch(err => res.status(404).json({success: false}));
+            result.save().then(() => res.json({ msg: "Result edited successfully!" }))
+            .catch(err => res.status(404).json({msg: "Failed to edit result!"}));
     });
 })
 
@@ -111,8 +111,8 @@ router.put('/:id', adminAuth, (req, res) => {
 //access    Private+Admin
 router.delete('/:id', adminAuth, (req, res) => {
     Result.findById(req.params.id)
-        .then(result => result.remove().then(() => res.json({success: true})))
-        .catch(err => res.status(404).json({success: false}));
+        .then(result => result.remove().then(() => res.json({ msg: "Result deleted successfully!" })))
+        .catch(err => res.status(404).json({ msg: "Failed to delete result!" }));
 })
 
 module.exports = router;
