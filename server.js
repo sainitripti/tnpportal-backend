@@ -11,7 +11,7 @@ const companies = require('./routes/api/companies');
 const results = require('./routes/api/results');
 const jobs = require('./routes/api/jobs');
 const students = require('./routes/api/students');
-const registrations = require('./routes/api/registrations');
+const drivewiseregistrations = require('./routes/api/drive-wise-registrations');
 
 app.use(cors());
 app.use(express.json());
@@ -32,7 +32,7 @@ app.use('/api/companies', companies);
 app.use('/api/results', results);
 app.use('/api/jobs', jobs);
 app.use('/api/students', students);
-app.use('/api/registrations', registrations);
+app.use('/api/drive-wise-registrations', drivewiseregistrations);
 
 app.listen(PORT, function() {
     console.log("Server is running on Port: " + PORT);
