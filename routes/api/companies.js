@@ -13,16 +13,16 @@ const Company = require('../../models/Company');
 
 //@route    GET api/companies
 //desc      GET All Companies
-//access    Private
-router.get('/', auth, (req, res) => {
+//access    Private+admin
+router.get('/', adminAuth, (req, res) => {
     Company.find()
         .then(companies => res.json(companies))
 });
 
 //@route    POST api/companies
 //desc      create a new Company
-//access    Private+Admin
-router.post('/', adminAuth, (req, res) => {
+//access    Public
+router.post('/', (req, res) => {
     const {companyDetails, jobDetails, eligibility, selectionProcedure, requirements, otherInfoForStudents} = req.body;
 
     const companyName = req.body.companyDetails.companyName;
@@ -69,10 +69,6 @@ router.post('/', adminAuth, (req, res) => {
 
             const newCompany = new Company({
                 companyDetails, 
-                companyName,
-                contactPerson,
-                phoneNumber,
-                emailID,
                 jobDetails, 
                 eligibility, 
                 selectionProcedure, 
@@ -80,49 +76,13 @@ router.post('/', adminAuth, (req, res) => {
                 otherInfoForStudents
             });
 
-                    
             newCompany.save()
-            .then(company => {
-
-                res.json({
-                    company: {
-                        id: company.id,
-                        companyName: company.companyName
-                    },
-                    msg: {
-                        success: true
-                    }                      
-                })
-            })                     
+            .then(company => res.json({ msg: "Job Announcement Form submitted successfully!" }))
+            .catch(function(err) {
+                console.log(err);
+                return res.status(400).json({msg: "Failed to submit Job Annoucement Form!"});
+            });                       
         })
 });
-
-//@route    PUT api/companies/:id
-//desc      update Company
-//access    Private+Admin
-router.put('/:id', adminAuth, (req, res) => {
-    Company.findById(req.params.id, function(err, company) {
-        if (!company)
-            res.status(404).send("company not found");
-        else
-            company.name = req.body.name;
-            company.jobRole = req.body.jobRole;
-            company.jobLocation = req.body.jobLocation;
-            company.package = req.body.package;
-            company.eligibility = req.body.eligibility;
-            company.other = req.body.other;
-            company.companyDetails = req.body.companyDetails;
-            company.jobDetails = req.body.jobDetails;
-            company.eligibility = req.body.eligibility; 
-            company.selectionProcedure = req.body.selectionProcedure;
-            company.requirements = req.body.requirements;
-            company.otherInfoForStudents = req.body.otherInfoForStudents;
-                
-            company.save().then(() => res.json({success: true}))
-            .catch(err => res.status(404).json({success: false}));
-    });
-})
-
-
 
 module.exports = router;

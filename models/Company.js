@@ -6,8 +6,7 @@ let CompanySchema = new Schema({
     companyDetails: {
         companyName: {
             type: String,
-            required: true,
-            unique: true
+            required: true
         },
         contactPerson: {
             type: String,
@@ -40,28 +39,6 @@ let CompanySchema = new Schema({
         },
         linkToJD: {
             type: String
-        },
-        stipend: {
-            type: String
-        },
-        compensationOffered: {
-            totalCTC: {
-                type: String
-            },
-            breakupCTC: {              
-                fixed: {
-                    type: String
-                },
-                variable: {
-                    type: String
-                },
-                bonds: {
-                    type: String
-                },
-                otherAllowances: {
-                    type: String
-                }
-            }
         }
     },
     eligibility: {
@@ -85,20 +62,20 @@ let CompanySchema = new Schema({
         prefferedVisitDateOrWeek: {
             type: String
         },
-        hasWrittenTest: {
-            type: Boolean
+        writtenTest: {
+            type: String
         },
-        hasOnlineTest: {
-            type: Boolean
+        onlineTest: {
+            type: String
         },
-        hasGD: {
-            type: Boolean
+        groupDiscussion: {
+            type: String
         },
-        hasTechnicalRound: {
-            type: Boolean
+        technicalRound: {
+            type: String
         },
-        hasHRRound: {
-            type: Boolean
+        hRRound: {
+            type: String
         }
     },
     requirements: {
