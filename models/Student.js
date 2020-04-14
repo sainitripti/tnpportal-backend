@@ -42,49 +42,15 @@ let StudentSchema = new Schema({
     percentage12: {
         type: String,
         required: true
-    },
-    percentageUG: {
-        type: String
-    },
-    backlogs: {
-        activeBacklogs: {
-            type: Number,
-            required: true
-        },
-        deadBacklogs: {
-            type: Number,
-            required: true
-        }
-    },
-    resumeLink: {
+    }, 
+    activeBacklogs: {
         type: String,
         required: true
     },
-    isAppearingForPlacements: {
-        type: Boolean,
+    deadBacklogs: {
+        type: String,
         required: true
-    },
-    isPlaced: {
-        type: Boolean,
-        required: true
-    },
-    offerDetails: [{
-        companyName: {
-            type: String
-        },
-        source: {
-            type: String
-        },
-        role: {
-            type: String
-        },
-        ctc: {
-            type: String
-        },
-        isMassRecruitment: {
-            type: Boolean
-        }
-    }] 
+    }
 });
 
 module.exports = Student = mongoose.model('student', StudentSchema);
